@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
@@ -11,7 +12,11 @@ class App extends Component {
         <BrowserRouter>
           <Switch>
             <Route path="/" exact component={Login}></Route>
-            <Route path="/dashboard" exact component={Dashboard}></Route>
+            {this.props.auth.isSignedIn ? (
+              <Route path="/dashboard" exact component={Dashboard}></Route>
+            ) : (
+              <div></div>
+            )}
           </Switch>
         </BrowserRouter>
       </React.Fragment>
@@ -19,4 +24,11 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return state;
+};
+
+export default connect(
+  mapStateToProps,
+  {},
+)(App);

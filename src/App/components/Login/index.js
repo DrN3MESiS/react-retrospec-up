@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import SubmitValidationForm from './form';
 
 class Login extends Component {
+  onSubmitCall = values => {
+    console.log(values);
+  };
+
   render() {
     return (
-      <div class="ui card">
-        <div class="content">
-          <h2>Login</h2>
-        </div>
-        <div class="ui input">
-          <input type="text" placeholder="Username..." />
-        </div>
-        <div class="ui input">
-          <input type="text" placeholder="password..." />
-        </div>
-        <button class="ui primary button">Login</button>
-      </div>
+      <SubmitValidationForm onSubmit={this.onSubmitCall}></SubmitValidationForm>
     );
   }
 }
 
-export default Login;
+const mapStateToProps = state => {
+  return state;
+};
+
+export default connect(
+  mapStateToProps,
+  {},
+)(Login);
