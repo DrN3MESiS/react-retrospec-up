@@ -1,6 +1,8 @@
-export const LOGIN_USER = () => {
+import {CHANGE_USER_STATUS as STAT} from './types'
+
+export const CHANGE_USER_STATUS = (data) => {
   return {
-    type: '',
-    payload: '',
+    type: STAT,
+    payload: data,
   };
-};
+}

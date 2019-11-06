@@ -1,21 +1,38 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import firebaseService from './services/firebase';
 
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import { CHANGE_USER_STATUS } from './actions'
 
 class App extends Component {
+  firebaseCheck = () => {
+    firebaseService.init();
+    firebaseService.onAuthStateChanged(authUser => {
+      if (authUser) {
+        firebaseService.getUserData(authUser.uid).then(user => {
+          this.props.CHANGE_USER_STATUS(user);
+        });
+      }
+    });
+  };
+
+  componentDidMount(){
+    this.firebaseCheck();
+  }
+
   render() {
     return (
       <React.Fragment>
         <BrowserRouter>
           <Switch>
-            <Route path="/" exact component={Login}></Route>
-            {this.props.auth.isSignedIn ? (
-              <Route path="/dashboard" exact component={Dashboard}></Route>
+            
+            {this.props.auth_status.isSignedIn ? (
+              <Route path="/" exact component={Dashboard}></Route>
             ) : (
-              <div></div>
+              <Route path="/" exact component={Login}></Route>
             )}
           </Switch>
         </BrowserRouter>
@@ -30,5 +47,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  {},
+  {CHANGE_USER_STATUS},
 )(App);

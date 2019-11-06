@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 class SubmitValidationForm extends Component {
   renderError = ({ error, touched }) => {
     if (touched && error) {
-      return <h5 class="ui red header">{error}</h5>;
+      return <h5 className="ui red header">{error}</h5>;
     }
   };
 
@@ -23,32 +23,25 @@ class SubmitValidationForm extends Component {
   };
 
   render() {
-    const { error, handleSubmit, pristine, reset, submitting } = this.props;
+    const { error, handleSubmit, submitting } = this.props;
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <Field
-          name="username"
+          name="email"
           type="text"
           component={this.renderField}
-          label="Username"
+          label="Enter email..."
         />
         <Field
           name="password"
           type="password"
           component={this.renderField}
-          label="Password"
+          label="Enter password..."
         />
         {error && <strong>{error}</strong>}
         <div>
           <button type="submit" disabled={submitting}>
             Log In
-          </button>
-          <button
-            type="button"
-            disabled={pristine || submitting}
-            onClick={reset}
-          >
-            Clear Values
           </button>
         </div>
       </form>
@@ -59,8 +52,8 @@ class SubmitValidationForm extends Component {
 const validate = formValues => {
   const errors = {};
 
-  if (!formValues.username) {
-    errors.username = 'You must enter a username!';
+  if (!formValues.email) {
+    errors.email = 'You must enter an email!';
   }
 
   if (!formValues.password) {

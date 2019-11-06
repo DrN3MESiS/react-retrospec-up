@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import AuthReducer from './Auth';
+import StatusReducer from './FirebaseStatus';
 import { reducer } from 'redux-form';
 
 export default combineReducers({
-  auth: AuthReducer,
+  auth_status: StatusReducer,
   form: reducer,
 });
