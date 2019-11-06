@@ -5,21 +5,25 @@ import firebaseService from './services/firebase';
 
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
-import { CHANGE_USER_STATUS } from './actions'
+import { CHANGE_USER_STATUS } from './actions';
 
 class App extends Component {
   firebaseCheck = () => {
     firebaseService.init();
     firebaseService.onAuthStateChanged(authUser => {
       if (authUser) {
-        firebaseService.getUserData(authUser.uid).then(user => {
-          this.props.CHANGE_USER_STATUS(user);
-        });
+        const firebaseUser = {
+          uid: authUser.uid,
+          email: authUser.email,
+          displayName: authUser.displayName,
+          logoutAccount: authUser,
+        };
+        this.props.CHANGE_USER_STATUS(firebaseUser);
       }
     });
   };
 
-  componentDidMount(){
+  componentDidMount() {
     this.firebaseCheck();
   }
 
@@ -28,7 +32,6 @@ class App extends Component {
       <React.Fragment>
         <BrowserRouter>
           <Switch>
-            
             {this.props.auth_status.isSignedIn ? (
               <Route path="/" exact component={Dashboard}></Route>
             ) : (
@@ -47,5 +50,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  {CHANGE_USER_STATUS},
+  { CHANGE_USER_STATUS },
 )(App);

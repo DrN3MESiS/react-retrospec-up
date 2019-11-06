@@ -6,27 +6,25 @@ const INIT_STATE = {
   profile: null,
 };
 
-export default (state = INIT_STATE, {type, payload }) => {
+export default (state = INIT_STATE, { type, payload }) => {
   switch (type) {
     case CHANGE_USER_STATUS:
-        
-        if(payload){
-          const {email, uid} = payload;
-          return {
-            ...state,
-            isSignedIn: true,
-            uid: uid,
-            profile: email,
-          };
-        } else {
-          return {
-            ...state,
-            isSignedIn: null,
-            uid: null,
-            profile: null,
-          };
-        }
-        
+      if (payload.uid) {
+        return {
+          ...state,
+          isSignedIn: true,
+          uid: payload.uid,
+          profile: { email: payload.email, dp_name: payload.displayName },
+        };
+      } else {
+        return {
+          ...state,
+          isSignedIn: null,
+          uid: null,
+          profile: null,
+        };
+      }
+
     default:
       return state;
   }
