@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-class SubmitValidationForm extends Component {
+class RegisterForm extends Component {
   renderError = ({ error, touched }) => {
     if (touched && error) {
       return <label className="ui red header">{error}</label>;
     }
   };
 
-  renderField = ({ input, label, type, meta: { touched, error } }) => (
+  renderField = ({ input, label, type, title, meta: { touched, error } }) => (
     <div>
-      <label>{label}</label>
+      <label>{title}</label>
       <div>
         <input {...input} placeholder={label} type={type} />
         {this.renderError({ touched, error })}
@@ -30,18 +30,20 @@ class SubmitValidationForm extends Component {
           name="email"
           type="text"
           component={this.renderField}
-          label="Enter email..."
+          title="Enter an email:"
+          label="Type your email..."
         />
         <Field
           name="password"
           type="password"
           component={this.renderField}
-          label="Enter password..."
+          title="Enter a password:"
+          label="Type your password..."
         />
         {error && <strong>{error}</strong>}
         <div>
           <button type="submit" disabled={submitting}>
-            Log In
+            Register
           </button>
         </div>
       </form>
@@ -59,11 +61,10 @@ const validate = formValues => {
   if (!formValues.password) {
     errors.password = 'You must enter a password!';
   }
-
   return errors;
 };
 
 export default reduxForm({
-  form: 'LOGIN_FORM',
+  form: 'REGISTER_FORM',
   validate,
-})(SubmitValidationForm);
+})(RegisterForm);

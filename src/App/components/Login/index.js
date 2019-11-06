@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import SubmitValidationForm from './form';
 import firebaseService from '../../services/firebase';
+import history from '../../history';
 
 import { CHANGE_USER_STATUS } from '../../actions';
 
@@ -19,12 +22,20 @@ class Login extends Component {
         displayName: res.user.displayName,
       };
       this.props.CHANGE_USER_STATUS(firebaseUser);
+      history.push({ pathname: '/' });
     }
   };
 
   render() {
     return (
-      <SubmitValidationForm onSubmit={this.onSubmitCall}></SubmitValidationForm>
+      <React.Fragment>
+        <SubmitValidationForm
+          onSubmit={this.onSubmitCall}
+        ></SubmitValidationForm>
+        <Link to="/register">
+          <a>Don't have an account? Register here</a>
+        </Link>
+      </React.Fragment>
     );
   }
 }
