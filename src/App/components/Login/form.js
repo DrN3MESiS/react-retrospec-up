@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import {Link} from 'react-router-dom'
 
 class SubmitValidationForm extends Component {
   renderError = ({ error, touched }) => {
     if (touched && error) {
-      return <label className="ui red header">{error}</label>;
+      return <div><label className="text-danger">{error}</label></div>;
     }
   };
 
-  renderField = ({ input, label, type, meta: { touched, error } }) => (
-    <div>
-      <label>{label}</label>
-      <div>
-        <input {...input} placeholder={label} type={type} />
+  renderField = ({ input, label, type, ph, classM, iconsrc, meta: { touched, error } }) => (
+    <div class="form-group">
+      <h5><i className={`fa ${iconsrc} icon`}></i>{label}</h5>
+        <input {...input} placeholder={ph} type={type} className={classM} />
         {this.renderError({ touched, error })}
-      </div>
     </div>
   );
 
@@ -30,20 +29,24 @@ class SubmitValidationForm extends Component {
           name="email"
           type="text"
           component={this.renderField}
-          label="Enter email..."
+          classM="form-control"
+          iconsrc="fa-envelope"
+          label="Mail:"
+          ph="Enter an email..."
         />
         <Field
           name="password"
           type="password"
+          classM="form-control"
+          iconsrc="fa-key"
           component={this.renderField}
-          label="Enter password..."
+          label="Password:"
+          ph="Enter a password..."
         />
         {error && <strong>{error}</strong>}
-        <div>
-          <button type="submit" disabled={submitting}>
-            Log In
-          </button>
-        </div>
+          <input type="submit" className="btn btn-black" disabled={submitting} value="Log In"/>
+          <hr></hr>
+          <Link to="/register">Don't have an account? Register here!</Link>
       </form>
     );
   }
