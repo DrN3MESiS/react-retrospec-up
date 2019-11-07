@@ -31,9 +31,7 @@ class Login extends Component {
       <React.Fragment>
         <div className="sidenav">
           <div className="login-main-text">
-            <h2>
-              R4
-              <br /> Login{" "}
+            <h2>RetrospecUP
             </h2>
             <p>Login or register from here to access.</p>
           </div>

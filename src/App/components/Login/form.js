@@ -10,7 +10,7 @@ class SubmitValidationForm extends Component {
   };
 
   renderField = ({ input, label, type, ph, classM, iconsrc, meta: { touched, error } }) => (
-    <div class="form-group">
+    <div className="form-group">
       <h5><i className={`fa ${iconsrc} icon`}></i>{label}</h5>
         <input {...input} placeholder={ph} type={type} className={classM} />
         {this.renderError({ touched, error })}
