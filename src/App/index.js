@@ -1,13 +1,14 @@
-import React, { Component } from "react";
-import { Router, Switch, Route } from "react-router-dom";
-import { connect } from "react-redux";
-import firebaseService from "./services/firebase";
+import React, { Component } from 'react';
+import { Router, Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import firebaseService from './services/firebase';
 
-import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
-import { CHANGE_USER_STATUS } from "./actions";
-import Register from "./components/Register";
-import history from "./history";
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import { CHANGE_USER_STATUS } from './actions';
+import Register from './components/Register';
+import history from './history';
+import FourLs from './components/Dashboard/subcomponents/4Ls';
 
 class App extends Component {
   firebaseCheck = () => {
@@ -18,7 +19,7 @@ class App extends Component {
           uid: authUser.uid,
           email: authUser.email,
           displayName: authUser.displayName,
-          logoutAccount: authUser
+          logoutAccount: authUser,
         };
         this.props.CHANGE_USER_STATUS(firebaseUser);
       }
@@ -31,7 +32,12 @@ class App extends Component {
 
   renderPaths = () => {
     if (this.props.auth_status.isSignedIn) {
-      return <Route path="/" exact component={Dashboard}></Route>;
+      return (
+        <React.Fragment>
+          <Route path="/" exact component={Dashboard}></Route>
+          <Route path="/r/4ls" exact component={FourLs}></Route>
+        </React.Fragment>
+      );
     } else {
       return (
         <React.Fragment>
@@ -59,5 +65,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { CHANGE_USER_STATUS }
+  { CHANGE_USER_STATUS },
 )(App);

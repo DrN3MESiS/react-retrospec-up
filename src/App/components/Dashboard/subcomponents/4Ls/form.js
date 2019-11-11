@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 
-class RegisterForm extends Component {
+class Form4L extends Component {
   renderError = ({ error, touched }) => {
     if (touched && error) {
       return (
@@ -41,37 +41,56 @@ class RegisterForm extends Component {
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <Field
-          name="email"
+          name="liked"
           type="text"
           component={this.renderField}
           classM="form-control"
-          iconsrc="fa-envelope"
-          label="Mail:"
-          ph="Enter an email..."
+          iconsrc="fa-keyboard-o"
+          label="Liked:"
+          ph="Enter what you liked..."
         />
         <Field
-          name="password"
-          type="password"
-          classM="form-control"
-          iconsrc="fa-key"
+          name="learned"
+          type="text"
           component={this.renderField}
-          label="Password:"
-          ph="Enter a password..."
+          classM="form-control"
+          iconsrc="fa-keyboard-o"
+          label="Learned:"
+          ph="Enter what you learned..."
+        />
+        <Field
+          name="lacked"
+          type="text"
+          component={this.renderField}
+          classM="form-control"
+          iconsrc="fa-keyboard-o"
+          label="Lacked:"
+          ph="Enter what you thought it lacked..."
+        />
+        <Field
+          name="longed"
+          type="text"
+          component={this.renderField}
+          classM="form-control"
+          iconsrc="fa-keyboard-o"
+          label="Longed For:"
+          ph="Enter what you longed for..."
         />
         {error && <strong>{error}</strong>}
+
+        <hr></hr>
         <input
           type="submit"
           className="btn btn-black"
           disabled={submitting}
-          value="Register Account"
+          value="Submit Retrospective"
         />
-        <hr></hr>
         <Link to="/">
           <input
             type="button"
-            className="btn btn-primary"
-            value="Go to Login"
-          />
+            className="btn btn-danger"
+            value="Cancel Retrospective"
+          ></input>
         </Link>
       </form>
     );
@@ -81,18 +100,26 @@ class RegisterForm extends Component {
 const validate = formValues => {
   const errors = {};
 
-  if (!formValues.email) {
-    errors.email = 'You must enter an email!';
+  if (!formValues.liked) {
+    errors.liked = 'You must enter something here!';
   }
 
-  if (!formValues.password) {
-    errors.password = 'You must enter a password!';
+  if (!formValues.learned) {
+    errors.learned = 'You must enter something here!';
+  }
+
+  if (!formValues.lacked) {
+    errors.lacked = 'You must enter something here!';
+  }
+
+  if (!formValues.longed) {
+    errors.longed = 'You must enter something here!';
   }
 
   return errors;
 };
 
 export default reduxForm({
-  form: 'REGISTER_FORM',
+  form: '4L_FORM',
   validate,
-})(RegisterForm);
+})(Form4L);

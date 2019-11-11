@@ -25,7 +25,23 @@ class Register extends Component {
   };
 
   render() {
-    return <RegisterForm onSubmit={this.handleRegister}></RegisterForm>;
+    return (
+      <React.Fragment>
+        <div className="sidenav">
+          <div className="login-main-text">
+            <h2>RetrospecUP</h2>
+            <p>Register from here to access the dashboard.</p>
+          </div>
+        </div>
+        <div className="main">
+          <div className="col-md-6 col-sm-12">
+            <div className="login-form">
+              <RegisterForm onSubmit={this.handleRegister}></RegisterForm>
+            </div>
+          </div>
+        </div>
+      </React.Fragment>
+    );
   }
 }
 
