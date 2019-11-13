@@ -1,28 +1,34 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import SubmitValidationForm from './form';
-import firebaseService from '../../services/firebase';
-import history from '../../history';
-import './style.css';
+import SubmitValidationForm from "./form";
+import firebaseService from "../../services/firebase";
+import history from "../../history";
+import "./style.css";
 
-import { CHANGE_USER_STATUS } from '../../actions';
+import { CHANGE_USER_STATUS } from "../../actions";
 
 class Login extends Component {
-  onSubmitCall = async ({ email, password }) => {
-    if (firebaseService.auth) {
-      const res = await firebaseService.auth.signInWithEmailAndPassword(
-        email,
-        password,
-      );
+  state = { loginErr: "" };
 
-      const firebaseUser = {
-        uid: res.user.uid,
-        email: res.user.email,
-        displayName: res.user.displayName,
-      };
-      this.props.CHANGE_USER_STATUS(firebaseUser);
-      history.push({ pathname: '/' });
+  onSubmitCall = async ({ email, password }) => {
+    this.setState({ ...this.state, loginErr: "" });
+    if (firebaseService.auth) {
+      firebaseService.auth
+        .signInWithEmailAndPassword(email, password)
+        .then(res => {
+          const firebaseUser = {
+            uid: res.user.uid,
+            email: res.user.email,
+            displayName: res.user.displayName
+          };
+          this.props.CHANGE_USER_STATUS(firebaseUser);
+          history.push({ pathname: "/" });
+        })
+        .catch(err => {
+          console.log(err);
+          this.setState({ ...this.state, loginErr: err.message });
+        });
     }
   };
 
@@ -38,6 +44,11 @@ class Login extends Component {
         <div className="main">
           <div className="col-md-6 col-sm-12">
             <div className="login-form">
+              {this.state.loginErr && (
+                <div class="alert alert-danger" role="alert">
+                  {this.state.loginErr}
+                </div>
+              )}
               <SubmitValidationForm
                 onSubmit={this.onSubmitCall}
               ></SubmitValidationForm>
@@ -53,7 +64,4 @@ const mapStateToProps = state => {
   return state;
 };
 
-export default connect(
-  mapStateToProps,
-  { CHANGE_USER_STATUS },
-)(Login);
+export default connect(mapStateToProps, { CHANGE_USER_STATUS })(Login);
