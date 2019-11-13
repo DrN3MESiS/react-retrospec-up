@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import firebaseService from "../../services/firebase";
 import { CHANGE_USER_STATUS } from "../../actions";
+import "./style.css";
 
 class Dashboard extends Component {
   handleSignOut = async () => {
@@ -22,7 +23,7 @@ class Dashboard extends Component {
           className="btn btn-danger"
           onClick={this.handleSignOut}
         />
-        <div>
+        <div className="cells">
           <Link to="/r/4ls">
             <input
               type="button"
@@ -35,7 +36,7 @@ class Dashboard extends Component {
             Easy to fill with things liked, learned, lacked and longed for
           </p>
         </div>
-        <div>
+        <div className="cells">
           <input
             type="button"
             class="btn btn-outline-dark"
@@ -47,7 +48,7 @@ class Dashboard extends Component {
           </p>
           <h2>Coming Soon!</h2>
         </div>
-        <div>
+        <div className="cells">
           <input
             type="button"
             class="btn btn-outline-dark"
@@ -59,7 +60,7 @@ class Dashboard extends Component {
           </p>
           <h2>Coming Soon!</h2>
         </div>
-        <div>
+        <div className="cells">
           <input
             type="button"
             class="btn btn-outline-dark"
