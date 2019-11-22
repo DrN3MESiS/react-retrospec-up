@@ -14,7 +14,7 @@ class Register extends Component {
       .createUserWithEmailAndPassword(email, password)
       .then(res => {
         const firebaseUser = {
-          uid: res.user.uid,
+          uid: res.user,
           email: res.user.email,
           displayName: res.user.displayName
         };
