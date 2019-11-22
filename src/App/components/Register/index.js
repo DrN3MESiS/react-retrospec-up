@@ -12,14 +12,18 @@ class Register extends Component {
     this.setState({ ...this.state, regError: "" });
     firebaseService.auth
       .createUserWithEmailAndPassword(email, password)
-      .then(res => {
-        const firebaseUser = {
-          uid: res.user,
+      .then(async res => {
+        const user = {
+          uid: res.user.uid,
           email: res.user.email,
-          displayName: res.user.displayName
+          retros: []
         };
-        this.props.CHANGE_USER_STATUS(firebaseUser);
-        history.push({ pathname: "/" });
+        await firebaseService.updateUserData(user).then(async res => {
+          await firebaseService.getUserData(user.uid).then(res => {
+            this.props.CHANGE_USER_STATUS(res);
+            history.push({ pathname: "/" });
+          })
+        })
       })
       .catch(err => {
         this.setState({ ...this.state, regError: err.message });

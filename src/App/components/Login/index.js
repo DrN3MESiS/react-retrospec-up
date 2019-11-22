@@ -16,14 +16,11 @@ class Login extends Component {
     if (firebaseService.auth) {
       firebaseService.auth
         .signInWithEmailAndPassword(email, password)
-        .then(res => {
-          const firebaseUser = {
-            uid: res.user.uid,
-            email: res.user.email,
-            displayName: res.user.displayName
-          };
-          this.props.CHANGE_USER_STATUS(firebaseUser);
-          history.push({ pathname: "/" });
+        .then(async res => {
+          await firebaseService.getUserData(res.user.uid).then(res => {
+            this.props.CHANGE_USER_STATUS(res);
+            history.push({ pathname: "/" });
+          })
         })
         .catch(err => {
           console.log(err);

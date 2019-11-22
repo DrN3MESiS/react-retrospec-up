@@ -3,7 +3,8 @@ import { CHANGE_USER_STATUS } from '../actions/types';
 const INIT_STATE = {
   isSignedIn: null,
   uid: null,
-  profile: null,
+  email: null,
+  retros: null
 };
 
 export default (state = INIT_STATE, { type, payload }) => {
@@ -14,14 +15,16 @@ export default (state = INIT_STATE, { type, payload }) => {
           ...state,
           isSignedIn: true,
           uid: payload.uid,
-          profile: { email: payload.email, dp_name: payload.displayName },
+          email: payload.email,
+          retros: payload.retros
         };
       } else {
         return {
           ...state,
           isSignedIn: null,
           uid: null,
-          profile: null,
+          email: null,
+          retros: null
         };
       }
 
