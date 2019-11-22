@@ -29,6 +29,31 @@ class firebaseService {
       .set(user);
   };
 
+  getRetroInfo = retID => {
+    if (!firebase.apps.length) return;
+    return new Promise((resolve, reject) => {
+      this.db
+        .collection('retrospectives')
+        .doc(retID)
+        .get()
+        .then(doc => resolve(doc.data()));
+    });
+  }
+
+  updateRetData = ret => {
+    if (!firebase.apps.length) return;
+    return this.db.collection('retrospectives').doc(ret.id).set(ret)
+  }
+
+  createRet = ret => {
+    if (!firebase.apps.length) return;
+    
+    let newRet = this.db.collection('retrospectives').doc()
+    newRet.set(ret)
+
+    return newRet.id;
+  }
+
   onAuthStateChanged = callback => {
     if (!this.auth) return;
     this.auth.onAuthStateChanged(callback);

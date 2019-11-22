@@ -41,6 +41,15 @@ class Form4L extends Component {
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <Field
+          name="name"
+          type="text"
+          component={this.renderField}
+          classM="form-control"
+          iconsrc="fa-keyboard-o"
+          label="Name of the Retrospective:"
+          ph="Enter the name of the retrospective..."
+        />
+        <Field
           name="liked"
           type="text"
           component={this.renderField}
@@ -85,7 +94,7 @@ class Form4L extends Component {
           disabled={submitting}
           value="Submit Retrospective"
         />
-        <Link to="/">
+        <Link to="/r/4Ls">
           <input
             type="button"
             className="btn btn-danger"
@@ -99,6 +108,10 @@ class Form4L extends Component {
 
 const validate = formValues => {
   const errors = {};
+
+  if (!formValues.name) {
+    errors.name = 'You must enter a name!';
+  }
 
   if (!formValues.liked) {
     errors.liked = 'You must enter something here!';
