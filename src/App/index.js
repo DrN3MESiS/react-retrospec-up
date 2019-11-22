@@ -14,15 +14,11 @@ import Create4L from './components/Dashboard/subcomponents/4Ls/Create4L'
 class App extends Component {
   firebaseCheck = () => {
     firebaseService.init();
-    firebaseService.onAuthStateChanged(authUser => {
+    firebaseService.onAuthStateChanged(async authUser  => {
       if (authUser) {
-        const firebaseUser = {
-          uid: authUser.uid,
-          email: authUser.email,
-          displayName: authUser.displayName,
-          logoutAccount: authUser,
-        };
-        this.props.CHANGE_USER_STATUS(firebaseUser);
+        await firebaseService.getUserData(authUser.uid).then(res => {
+          this.props.CHANGE_USER_STATUS(res);
+        })
       }
     });
   };
@@ -38,6 +34,7 @@ class App extends Component {
           <Route path="/" exact component={Dashboard}></Route>
           <Route path="/r/4ls" exact component={Dash4L}></Route>
           <Route path="/r/4ls/create" exact component={Create4L}></Route>
+          <Route path="/r/4ls/:id" exact></Route>
         </React.Fragment>
       );
     } else {

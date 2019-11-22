@@ -27,7 +27,7 @@ class Dashboard extends Component {
           <Link to="/r/4ls">
             <input
               type="button"
-              class="btn btn-outline-dark"
+              className="btn btn-outline-dark"
               style={{ marginTop: "20%" }}
               value="4 L's"
             />
@@ -39,7 +39,7 @@ class Dashboard extends Component {
         <div className="cells">
           <input
             type="button"
-            class="btn btn-outline-dark"
+            className="btn btn-outline-dark"
             style={{ marginTop: "20%" }}
             value="KALM"
           />
@@ -51,7 +51,7 @@ class Dashboard extends Component {
         <div className="cells">
           <input
             type="button"
-            class="btn btn-outline-dark"
+            className="btn btn-outline-dark"
             style={{ marginTop: "10%" }}
             value="SSM"
           />
@@ -63,7 +63,7 @@ class Dashboard extends Component {
         <div className="cells">
           <input
             type="button"
-            class="btn btn-outline-dark"
+            className="btn btn-outline-dark"
             style={{ marginTop: "10%" }}
             value="4By4"
           />

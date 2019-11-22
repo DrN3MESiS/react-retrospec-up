@@ -18,6 +18,7 @@ export class FourLs extends Component {
     const retrospective = {
       name,
       owner: this.props.auth_status.uid,
+      type: "4Ls",
       editable: false,
       likedData,
       learnedData,
