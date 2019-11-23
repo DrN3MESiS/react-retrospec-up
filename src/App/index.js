@@ -43,6 +43,7 @@ class App extends Component {
         <React.Fragment>
           <Route path="/register" exact component={Register}></Route>
           <Route path="/" exact component={Login}></Route>
+          <Route path="/r/4ls/show/:id" exact component={Show4L}></Route>
         </React.Fragment>
       );
     }

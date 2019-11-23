@@ -8,7 +8,7 @@ export class Dash4L extends Component {
   state = { user_ret: [], refreshStatus: false };
 
   refreshData = async () => {
-    this.setState({...this.state, refreshStatus: true})
+    this.setState({ ...this.state, refreshStatus: true });
 
     const user = this.props.auth_status.uid;
     await firebaseService.getUserData(user).then(res => {
@@ -26,16 +26,19 @@ export class Dash4L extends Component {
     });
 
     await Promise.all(promises);
-    this.setState({...this.state, refreshStatus: false, user_ret: retros_data });
+    this.setState({
+      ...this.state,
+      refreshStatus: false,
+      user_ret: retros_data
+    });
   };
 
   changeRetroStatus = async id => {
     firebaseService.getRetroInfo(id).then(res => {
-      const newData = {...res, editable: !res.editable}
-      firebaseService.updateRetData(newData)
+      const newData = { ...res, editable: !res.editable };
+      firebaseService.updateRetData(newData);
       this.refreshData();
-    })
-    
+    });
   };
 
   deleteRetro = async id => {
@@ -71,24 +74,65 @@ export class Dash4L extends Component {
                     {editable ? (
                       <React.Fragment>
                         <h6>Status: Public</h6>
-                        <h6>Retrospective URL: <Link to={`/r/4ls/show/${id}`}>{`/r/4ls/show/${id}`}</Link></h6>
-                        <input type="button" value="Make Private" className="btn btn-outline-warning" onClick={e => {this.changeRetroStatus(id)}}></input>
+                        <h6>Retrospective URL:</h6>
                       </React.Fragment>
                     ) : (
                       <React.Fragment>
                         <h6>Status: Private</h6>
-                        <input type="button" value="Make Public" className="btn btn-outline-success" onClick={e => {this.changeRetroStatus(id)}}></input>
                       </React.Fragment>
                     )}
+                    <div className="btn-group" role="group" aria-label="...">
+                      <Link to={`/r/4ls/show/${id}`}>
+                        <input
+                          type="button"
+                          className="btn btn-outline-primary"
+                          value="Show Retrospective"
+                        ></input>
+                      </Link>
+                      <input
+                        type="button"
+                        className="btn btn-outline-dark"
+                        value="Share URL"
+                        onClick={() => {
+                          console.log(`https://retrospec-up.firebaseapp.com/r/4ls/show/${id}`);
+                        }}
+                      ></input>
+                    </div>
                     <hr></hr>
-                    <input
-                      type="button"
-                      className="btn btn-outline-danger"
-                      value="Delete Retrospective"
-                      onClick={e => {
-                        this.deleteRetro(id);
-                      }}
-                    ></input>
+
+                    <div className="btn-group" role="group" aria-label="...">
+                      {editable ? (
+                        <React.Fragment>
+                          <input
+                            type="button"
+                            value="Make Private"
+                            className="btn btn-outline-warning"
+                            onClick={e => {
+                              this.changeRetroStatus(id);
+                            }}
+                          ></input>
+                        </React.Fragment>
+                      ) : (
+                        <React.Fragment>
+                          <input
+                            type="button"
+                            value="Make Public"
+                            className="btn btn-outline-success"
+                            onClick={e => {
+                              this.changeRetroStatus(id);
+                            }}
+                          ></input>
+                        </React.Fragment>
+                      )}
+                      <input
+                        type="button"
+                        className="btn btn-outline-danger"
+                        value="Delete Retrospective"
+                        onClick={e => {
+                          this.deleteRetro(id);
+                        }}
+                      ></input>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -110,30 +154,37 @@ export class Dash4L extends Component {
     return (
       <React.Fragment>
         <div className="container">
-
-        <div style={{textAlign: "center"}}>
-        <Link to="/r/4ls/create">
-          <input
-            type="button"
-            className="btn btn-primary"
-            value="Create 4L Restrospective"
-          ></input>
-        </Link>
-        <Link to="/">
-          <input
-            type="button"
-            className="btn btn-warning"
-            value="Go Back"
-          ></input>
-        </Link>
-        <hr></hr>
-        <h1>Your 4Ls Retrospectives:</h1>
-        <button onClick={this.refreshData} className="btn btn-dark" style={{width: '8rem', height: '3rem'}}>
-          {this.state.refreshStatus ? (<div className="spinner-border text-light" role="status"></div>) : ("Refresh Data")}
-        </button>
-        <hr></hr>
-        </div>
-        <ul className="list-group">{this.renderRetrospectives()}</ul>
+          <div style={{ textAlign: "center" }}>
+            <Link to="/r/4ls/create">
+              <input
+                type="button"
+                className="btn btn-primary"
+                value="Create 4L Restrospective"
+              ></input>
+            </Link>
+            <Link to="/">
+              <input
+                type="button"
+                className="btn btn-warning"
+                value="Go Back"
+              ></input>
+            </Link>
+            <hr></hr>
+            <h1>Your 4Ls Retrospectives:</h1>
+            <button
+              onClick={this.refreshData}
+              className="btn btn-dark"
+              style={{ width: "8rem", height: "3rem" }}
+            >
+              {this.state.refreshStatus ? (
+                <div className="spinner-border text-light" role="status"></div>
+              ) : (
+                "Refresh Data"
+              )}
+            </button>
+            <hr></hr>
+          </div>
+          <ul className="list-group">{this.renderRetrospectives()}</ul>
         </div>
       </React.Fragment>
     );
