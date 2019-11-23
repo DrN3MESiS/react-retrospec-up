@@ -9,13 +9,20 @@ export class Show4L extends Component {
 
   getData = async () =>{
     const curId = this.props.match.params.id;
-    const res = await firebaseService.getRetroInfo(curId);
-    this.setState({ ...this.state, curId, curRetro: res });
+    firebaseService.getRetroInfo(curId).then(res => {
+      this.setState({ ...this.state, curId, curRetro: res });
+    });
   }
 
   componentDidMount = () => {
+    firebaseService.init();
     this.getData();
   };
+
+  componentDidUpdate = () =>{
+    console.log(this.state)
+    console.log(this.props)
+  }
 
   renderLiked = data => {
     return data.map(e => {
