@@ -65,13 +65,13 @@ export class Dash4L extends Component {
           <React.Fragment key={name}>
             <li className="list-group-item">
               <div className="card">
-                <h5 className="card-header">Restrospective: {name}</h5>
+                <h5 className="card-header">Retrospective: {name}</h5>
                 <div className="card-body">
                   <div>
                     {editable ? (
                       <React.Fragment>
                         <h6>Status: Public</h6>
-                        <h6>Retrospective URL: {`/r/4ls/${id}`}</h6>
+                        <h6>Retrospective URL: <Link to={`/r/4ls/${id}`}>{`/r/4ls/${id}`}</Link></h6>
                         <input type="button" value="Make Private"></input>
                       </React.Fragment>
                     ) : (
