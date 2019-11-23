@@ -9,33 +9,7 @@ export class Dash4L extends Component {
 
   refreshData = async () => {
     this.setState({...this.state, refreshStatus: true})
-    const user = this.props.auth_status.uid;
-    await firebaseService.getUserData(user).then(res => {
-      this.props.CHANGE_USER_STATUS(res);
-      this.setState({...this.state, refreshStatus: false, user_ret: this.props.auth_status.retros})
-    });
-  };
 
-  changeRetroStatus = id => {
-
-  };
-
-  deleteRetro = async id => {
-    const user = this.props.auth_status.uid;
-    await firebaseService.getUserData(user).then(res => {
-      let newData = res;
-      const retChange = newData.retros.filter(e => {
-        return e !== id;
-      });
-      newData = { ...newData, retros: retChange };
-      firebaseService.updateUserData(newData);
-      firebaseService.deleteRet(id);
-
-      this.setState({ user_ret: this.props.auth_status.retros });
-    });
-  };
-
-  componentDidMount = async () => {
     const user = this.props.auth_status.uid;
     await firebaseService.getUserData(user).then(res => {
       this.props.CHANGE_USER_STATUS(res);
@@ -52,8 +26,39 @@ export class Dash4L extends Component {
     });
 
     await Promise.all(promises);
-    this.setState({ user_ret: retros_data });
+    this.setState({...this.state, refreshStatus: false, user_ret: retros_data });
   };
+
+  changeRetroStatus = async id => {
+    firebaseService.getRetroInfo(id).then(res => {
+      const newData = {...res, editable: !res.editable}
+      firebaseService.updateRetData(newData)
+      this.refreshData();
+    })
+    
+  };
+
+  deleteRetro = async id => {
+    const user = this.props.auth_status.uid;
+    await firebaseService.getUserData(user).then(res => {
+      let newData = res;
+      const retChange = newData.retros.filter(e => {
+        return e !== id;
+      });
+      newData = { ...newData, retros: retChange };
+      firebaseService.updateUserData(newData);
+      firebaseService.deleteRet(id);
+      this.refreshData();
+    });
+  };
+
+  componentDidMount = async () => {
+    this.refreshData();
+  };
+
+  componentDidUpdate = () =>{
+    console.log(this.state)
+  }
 
 
   renderRetrospectives = () => {
@@ -62,7 +67,7 @@ export class Dash4L extends Component {
         const { name, editable, id } = e;
 
         return (
-          <React.Fragment key={name}>
+          <React.Fragment key={id}>
             <li className="list-group-item">
               <div className="card">
                 <h5 className="card-header">Retrospective: {name}</h5>
@@ -71,20 +76,20 @@ export class Dash4L extends Component {
                     {editable ? (
                       <React.Fragment>
                         <h6>Status: Public</h6>
-                        <h6>Retrospective URL: <Link to={`/r/4ls/${id}`}>{`/r/4ls/${id}`}</Link></h6>
-                        <input type="button" value="Make Private"></input>
+                        <h6>Retrospective URL: <Link to={`/r/4ls/show/${id}`}>{`/r/4ls/show/${id}`}</Link></h6>
+                        <input type="button" value="Make Private" className="btn btn-outline-warning" onClick={e => {this.changeRetroStatus(id)}}></input>
                       </React.Fragment>
                     ) : (
                       <React.Fragment>
                         <h6>Status: Private</h6>
-                        <input type="button" value="Make Public"></input>
+                        <input type="button" value="Make Public" className="btn btn-outline-success" onClick={e => {this.changeRetroStatus(id)}}></input>
                       </React.Fragment>
                     )}
                     <hr></hr>
                     <input
                       type="button"
-                      className="btn btn-danger"
-                      value="D"
+                      className="btn btn-outline-danger"
+                      value="Delete Retrospective"
                       onClick={e => {
                         this.deleteRetro(id);
                       }}
@@ -109,6 +114,9 @@ export class Dash4L extends Component {
   render() {
     return (
       <React.Fragment>
+        <div className="container">
+
+        <div style={{textAlign: "center"}}>
         <Link to="/r/4ls/create">
           <input
             type="button"
@@ -128,7 +136,10 @@ export class Dash4L extends Component {
         <button onClick={this.refreshData} className="btn btn-dark" style={{width: '8rem', height: '3rem'}}>
           {this.state.refreshStatus ? (<div className="spinner-border text-light" role="status"></div>) : ("Refresh Data")}
         </button>
+        <hr></hr>
+        </div>
         <ul className="list-group">{this.renderRetrospectives()}</ul>
+        </div>
       </React.Fragment>
     );
   }

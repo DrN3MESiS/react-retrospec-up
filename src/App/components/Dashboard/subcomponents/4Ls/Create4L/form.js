@@ -49,7 +49,8 @@ class Form4L extends Component {
           label="Name of the Retrospective:"
           ph="Enter the name of the retrospective..."
         />
-        <table class="table table-dark" style={{width: '100%'}}>
+        <table className="table table-dark" style={{width: '100%'}}>
+          <tbody>
           <tr>
             <th>
               <Field
@@ -96,6 +97,7 @@ class Form4L extends Component {
               />
             </th>
           </tr>
+          </tbody>
         </table>
 
         {error && <strong>{error}</strong>}

@@ -49,6 +49,7 @@ class firebaseService {
     if (!firebase.apps.length) return;
     
     let newRet = this.db.collection('retrospectives').doc()
+    ret = {...ret, id: newRet.id}
     newRet.set(ret)
 
     return newRet.id;

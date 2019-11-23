@@ -35,7 +35,7 @@ class App extends Component {
           <Route path="/" exact component={Dashboard}></Route>
           <Route path="/r/4ls" exact component={Dash4L}></Route>
           <Route path="/r/4ls/create" exact component={Create4L}></Route>
-          <Route path="/r/4ls/:id" exact component={Show4L}></Route>
+          <Route path="/r/4ls/show/:id" exact component={Show4L}></Route>
         </React.Fragment>
       );
     } else {
