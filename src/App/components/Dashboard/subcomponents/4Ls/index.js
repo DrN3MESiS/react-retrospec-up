@@ -56,11 +56,6 @@ export class Dash4L extends Component {
     this.refreshData();
   };
 
-  componentDidUpdate = () =>{
-    console.log(this.state)
-  }
-
-
   renderRetrospectives = () => {
     if (this.state.user_ret && this.state.user_ret.length !== 0) {
       const promises = this.state.user_ret.map(e => {
