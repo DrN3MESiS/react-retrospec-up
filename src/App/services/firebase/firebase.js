@@ -54,6 +54,17 @@ class firebaseService {
     return newRet.id;
   }
 
+  deleteRet = (retID) =>{
+    if (!firebase.apps.length) return;
+    return new Promise((resolve, reject) => {
+      this.db
+        .collection('retrospectives')
+        .doc(retID)
+        .delete()
+        .then(doc => resolve());
+    });
+  }
+
   onAuthStateChanged = callback => {
     if (!this.auth) return;
     this.auth.onAuthStateChanged(callback);

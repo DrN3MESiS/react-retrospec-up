@@ -10,6 +10,7 @@ import Register from './components/Register';
 import history from './history';
 import Dash4L from './components/Dashboard/subcomponents/4Ls';
 import Create4L from './components/Dashboard/subcomponents/4Ls/Create4L'
+import Show4L from './components/Dashboard/subcomponents/4Ls/Show4L'
 
 class App extends Component {
   firebaseCheck = () => {
@@ -34,7 +35,7 @@ class App extends Component {
           <Route path="/" exact component={Dashboard}></Route>
           <Route path="/r/4ls" exact component={Dash4L}></Route>
           <Route path="/r/4ls/create" exact component={Create4L}></Route>
-          <Route path="/r/4ls/:id" exact></Route>
+          <Route path="/r/4ls/:id" exact component={Show4L}></Route>
         </React.Fragment>
       );
     } else {

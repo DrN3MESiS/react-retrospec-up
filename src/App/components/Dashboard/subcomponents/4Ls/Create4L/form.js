@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Field, reduxForm } from "redux-form";
+import { Link } from "react-router-dom";
 
 class Form4L extends Component {
   renderError = ({ error, touched }) => {
@@ -20,7 +20,7 @@ class Form4L extends Component {
     ph,
     classM,
     iconsrc,
-    meta: { touched, error },
+    meta: { touched, error }
   }) => (
     <div className="form-group">
       <h5>
@@ -49,42 +49,55 @@ class Form4L extends Component {
           label="Name of the Retrospective:"
           ph="Enter the name of the retrospective..."
         />
-        <Field
-          name="liked"
-          type="text"
-          component={this.renderField}
-          classM="form-control"
-          iconsrc="fa-keyboard-o"
-          label="Liked:"
-          ph="Enter what you liked..."
-        />
-        <Field
-          name="learned"
-          type="text"
-          component={this.renderField}
-          classM="form-control"
-          iconsrc="fa-keyboard-o"
-          label="Learned:"
-          ph="Enter what you learned..."
-        />
-        <Field
-          name="lacked"
-          type="text"
-          component={this.renderField}
-          classM="form-control"
-          iconsrc="fa-keyboard-o"
-          label="Lacked:"
-          ph="Enter what you thought it lacked..."
-        />
-        <Field
-          name="longed"
-          type="text"
-          component={this.renderField}
-          classM="form-control"
-          iconsrc="fa-keyboard-o"
-          label="Longed For:"
-          ph="Enter what you longed for..."
-        />
+        <table class="table table-dark" style={{width: '100%'}}>
+          <tr>
+            <th>
+              <Field
+                name="liked"
+                type="text"
+                component={this.renderField}
+                classM="form-control"
+                iconsrc="fa-keyboard-o"
+                label="Liked:"
+                ph="Enter what you liked..."
+              />
+            </th>
+            <th>
+              <Field
+                name="learned"
+                type="text"
+                component={this.renderField}
+                classM="form-control"
+                iconsrc="fa-keyboard-o"
+                label="Learned:"
+                ph="Enter what you learned..."
+              />
+            </th>
+            <th>
+              <Field
+                name="lacked"
+                type="text"
+                component={this.renderField}
+                classM="form-control"
+                iconsrc="fa-keyboard-o"
+                label="Lacked:"
+                ph="Enter what you thought it lacked..."
+              />
+            </th>
+            <th>
+              <Field
+                name="longed"
+                type="text"
+                component={this.renderField}
+                classM="form-control"
+                iconsrc="fa-keyboard-o"
+                label="Longed For:"
+                ph="Enter what you longed for..."
+              />
+            </th>
+          </tr>
+        </table>
+
         {error && <strong>{error}</strong>}
 
         <hr></hr>
@@ -110,29 +123,29 @@ const validate = formValues => {
   const errors = {};
 
   if (!formValues.name) {
-    errors.name = 'You must enter a name!';
+    errors.name = "You must enter a name!";
   }
 
   if (!formValues.liked) {
-    errors.liked = 'You must enter something here!';
+    errors.liked = "You must enter something here!";
   }
 
   if (!formValues.learned) {
-    errors.learned = 'You must enter something here!';
+    errors.learned = "You must enter something here!";
   }
 
   if (!formValues.lacked) {
-    errors.lacked = 'You must enter something here!';
+    errors.lacked = "You must enter something here!";
   }
 
   if (!formValues.longed) {
-    errors.longed = 'You must enter something here!';
+    errors.longed = "You must enter something here!";
   }
 
   return errors;
 };
 
 export default reduxForm({
-  form: '4L_FORM',
-  validate,
+  form: "4L_FORM",
+  validate
 })(Form4L);
