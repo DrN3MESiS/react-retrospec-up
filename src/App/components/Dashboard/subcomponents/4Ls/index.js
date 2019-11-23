@@ -94,7 +94,9 @@ export class Dash4L extends Component {
                         className="btn btn-outline-dark"
                         value="Share URL"
                         onClick={() => {
-                          console.log(`https://retrospec-up.firebaseapp.com/r/4ls/show/${id}`);
+                          let url = `https://retrospec-up.firebaseapp.com/r/4ls/show/${id}`
+                          navigator.clipboard.writeText(url)
+                          
                         }}
                       ></input>
                     </div>

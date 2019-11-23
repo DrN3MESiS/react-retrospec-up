@@ -40,6 +40,11 @@ class firebaseService {
     });
   }
 
+  updateRetField = retID =>{
+    if (!firebase.apps.length) return;
+    return this.db.collection('retrospectives').doc(retID)
+  }
+
   updateRetData = ret => {
     if (!firebase.apps.length) return;
     return this.db.collection('retrospectives').doc(ret.id).set(ret)

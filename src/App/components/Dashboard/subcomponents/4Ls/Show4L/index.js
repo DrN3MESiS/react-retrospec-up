@@ -3,26 +3,63 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import firebaseService from "../../../../../services/firebase";
+import AnswerForm from "./form";
 
 export class Show4L extends Component {
-  state = { curId: "", curRetro: null };
+  state = {
+    curId: "",
+    curRetro: null,
+    toEdit: null,
+    editing: false,
+    editObject: null
+  };
 
-  getData = async () =>{
+  handleSubmit = ({ answer }) => {
+    this.getData();
+    let data;
+    let document = firebaseService.updateRetField(this.state.curId);
+    switch (this.state.editObject) {
+      case "liked":
+          data = this.state.curRetro.likedData;
+          data.push(answer);
+          document.update({likedData: data});
+        break;
+      case "learned":
+          data = this.state.curRetro.learnedData;
+          data.push(answer);
+          document.update({learnedData: data});
+        break;
+      case "lacked":
+          data = this.state.curRetro.lackedData;
+          data.push(answer);
+          document.update({lackedData: data});
+        break;
+      case "longed":
+          data = this.state.curRetro.longedData;
+          data.push(answer);
+          document.update({longedData: data});
+        break;
+      default:
+        console.error("ERROR GETTING TYPE")
+        break;
+    }
+    
+    
+    this.setState({...this.state, toEdit: null, editing: false, editObject: null})
+    this.getData();
+  };
+
+  getData = async () => {
     const curId = this.props.match.params.id;
     firebaseService.getRetroInfo(curId).then(res => {
       this.setState({ ...this.state, curId, curRetro: res });
     });
-  }
+  };
 
   componentDidMount = () => {
     firebaseService.init();
     this.getData();
   };
-
-  componentDidUpdate = () =>{
-    console.log(this.state)
-    console.log(this.props)
-  }
 
   renderLiked = data => {
     return data.map(e => {
@@ -88,13 +125,15 @@ export class Show4L extends Component {
                   <h5>Retrospective Information:</h5>
                   <h6>Owner: {owner}</h6>
                   <h6>Type: {type}</h6>
-                  <Link to="/r/4ls">
-                    <input
-                      type="button"
-                      value="Back"
-                      className="btn btn-outline-danger"
-                    ></input>
-                  </Link>
+                  {this.props.auth_status.isSignedIn !== null && (
+                    <Link to="/r/4ls">
+                      <input
+                        type="button"
+                        value="Back"
+                        className="btn btn-outline-danger"
+                      ></input>
+                    </Link>
+                  )}
                 </div>
               </div>
               <hr></hr>
@@ -117,6 +156,14 @@ export class Show4L extends Component {
                         className="btn btn-info"
                         style={{ width: "100%" }}
                         value="Add to Licked"
+                        onClick={() => {
+                          this.setState({
+                            ...this.state,
+                            toEdit: "Liked",
+                            editing: true,
+                            editObject: "liked"
+                          });
+                        }}
                       ></input>
                     </li>
                   </ul>
@@ -139,6 +186,14 @@ export class Show4L extends Component {
                         className="btn btn-info"
                         style={{ width: "100%" }}
                         value="Add to Learned"
+                        onClick={() => {
+                          this.setState({
+                            ...this.state,
+                            toEdit: "Learned",
+                            editing: true,
+                            editObject: "learned"
+                          });
+                        }}
                       ></input>
                     </li>
                   </ul>
@@ -161,6 +216,14 @@ export class Show4L extends Component {
                         className="btn btn-info"
                         style={{ width: "100%" }}
                         value="Add to Lacked"
+                        onClick={() => {
+                          this.setState({
+                            ...this.state,
+                            toEdit: "Lacked",
+                            editing: true,
+                            editObject: "lacked"
+                          });
+                        }}
                       ></input>
                     </li>
                   </ul>
@@ -183,12 +246,45 @@ export class Show4L extends Component {
                         className="btn btn-info"
                         style={{ width: "100%" }}
                         value="Add to Longed For"
+                        onClick={() => {
+                          this.setState({
+                            ...this.state,
+                            toEdit: "Longed For",
+                            editing: true,
+                            editObject: "longed"
+                          });
+                        }}
                       ></input>
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
+
+            {this.state.editing ? (
+              <React.Fragment>
+                <hr></hr>
+                <div className="container">
+                  <div className="row">
+                    <div className="col">
+                      <div className="card">
+                        <div className="card-header">
+                          Add item to:{" "}
+                          <b>
+                            <i>{this.state.toEdit}</i>
+                          </b>
+                        </div>
+                        <div className="card-body">
+                          <AnswerForm onSubmit={this.handleSubmit} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </React.Fragment>
+            ) : (
+              <div></div>
+            )}
           </React.Fragment>
         );
       } else {
