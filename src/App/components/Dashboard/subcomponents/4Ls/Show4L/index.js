@@ -20,32 +20,36 @@ export class Show4L extends Component {
     let document = firebaseService.updateRetField(this.state.curId);
     switch (this.state.editObject) {
       case "liked":
-          data = this.state.curRetro.likedData;
-          data.push(answer);
-          document.update({likedData: data});
+        data = this.state.curRetro.likedData;
+        data.push(answer);
+        document.update({ likedData: data });
         break;
       case "learned":
-          data = this.state.curRetro.learnedData;
-          data.push(answer);
-          document.update({learnedData: data});
+        data = this.state.curRetro.learnedData;
+        data.push(answer);
+        document.update({ learnedData: data });
         break;
       case "lacked":
-          data = this.state.curRetro.lackedData;
-          data.push(answer);
-          document.update({lackedData: data});
+        data = this.state.curRetro.lackedData;
+        data.push(answer);
+        document.update({ lackedData: data });
         break;
       case "longed":
-          data = this.state.curRetro.longedData;
-          data.push(answer);
-          document.update({longedData: data});
+        data = this.state.curRetro.longedData;
+        data.push(answer);
+        document.update({ longedData: data });
         break;
       default:
-        console.error("ERROR GETTING TYPE")
+        console.error("ERROR GETTING TYPE");
         break;
     }
-    
-    
-    this.setState({...this.state, toEdit: null, editing: false, editObject: null})
+
+    this.setState({
+      ...this.state,
+      toEdit: null,
+      editing: false,
+      editObject: null
+    });
     this.getData();
   };
 
@@ -103,7 +107,10 @@ export class Show4L extends Component {
 
   renderData = () => {
     if (this.state.curRetro) {
-      if (this.state.curRetro.editable) {
+      if (
+        this.state.curRetro.editable ||
+        this.props.auth_status.uid === this.state.curRetro.owner
+      ) {
         const {
           name,
           owner,
