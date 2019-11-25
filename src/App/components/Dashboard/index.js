@@ -16,61 +16,85 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div>
-        <input
-          type="button"
-          value="Sign Out"
-          className="btn btn-danger"
-          onClick={this.handleSignOut}
-        />
-        <div className="cells">
-          <Link to="/r/4ls">
+      <div className="container">
+        <br></br>
+        <div class="row align-items-start">
+          <div class="col" style={{ textAlign: "center" }}>
+            <ul class="list-group">
+              <li class="list-group-item">
+                <Link to="/r/4ls">
+                  <input
+                    type="button"
+                    className="btn btn-outline-dark"
+                    value="4 L's"
+                  />
+                </Link>
+                <p style={{ marginTop: "2%" }}>
+                  Easy to fill with things liked, learned, lacked and longed for
+                </p>
+                <h2 style={{ color: "green" }}>Available Now!</h2>
+              </li>
+            </ul>
+          </div>
+          <div class="col" style={{ textAlign: "center" }}>
+            <ul class="list-group">
+              <li class="list-group-item">
+                <input
+                  type="button"
+                  className="btn btn-outline-dark"
+                  value="KALM"
+                />
+                <p style={{ marginTop: "2%" }}>
+                  Get to know the things to keep, add, less and more
+                </p>
+                <h2>Coming Soon!</h2>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <br></br>
+        <div class="row align-items-start">
+          <div class="col" style={{ textAlign: "center" }}>
+            <ul class="list-group">
+              <li class="list-group-item">
+                <input
+                  type="button"
+                  className="btn btn-outline-dark"
+                  value="SSM"
+                />
+                <p style={{ marginTop: "2%" }}>
+                  Let your team tell you what to stop, start and continue
+                </p>
+                <h2>Coming Soon!</h2>
+              </li>
+            </ul>
+          </div>
+          <div class="col" style={{ textAlign: "center" }}>
+            <ul class="list-group">
+              <li class="list-group-item">
+                <input
+                  type="button"
+                  className="btn btn-outline-dark"
+                  value="4By4"
+                />
+                <p style={{ marginTop: "2%" }}>
+                  Rate the state, people, tech and processes by how they feel
+                </p>
+                <h2>Coming Soon!</h2>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <br></br>
+        <div class="row">
+          <div class="col" style={{ textAlign: "center" }}>
             <input
               type="button"
-              className="btn btn-outline-dark"
-              style={{ marginTop: "20%" }}
-              value="4 L's"
+              value="Sign Out"
+              className="btn btn-danger"
+              onClick={this.handleSignOut}
             />
-          </Link>
-          <p style={{ marginTop: "2%" }}>
-            Easy to fill with things liked, learned, lacked and longed for
-          </p>
-        </div>
-        <div className="cells">
-          <input
-            type="button"
-            className="btn btn-outline-dark"
-            style={{ marginTop: "20%" }}
-            value="KALM"
-          />
-          <p style={{ marginTop: "2%" }}>
-            Get to know the things to keep, add, less and more
-          </p>
-          <h2>Coming Soon!</h2>
-        </div>
-        <div className="cells">
-          <input
-            type="button"
-            className="btn btn-outline-dark"
-            style={{ marginTop: "10%" }}
-            value="SSM"
-          />
-          <p style={{ marginTop: "2%" }}>
-            Let your team tell you what to stop, start and continue
-          </p>
-          <h2>Coming Soon!</h2>
-        </div>
-        <div className="cells">
-          <input
-            type="button"
-            className="btn btn-outline-dark"
-            style={{ marginTop: "10%" }}
-            value="4By4"
-          />
-          <p style={{ marginTop: "2%" }}>
-            Rate the state, people, tech and processes by how they feel
-          </p>
-          <h2>Coming Soon!</h2>
+          </div>
         </div>
       </div>
     );
