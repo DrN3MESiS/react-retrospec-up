@@ -5,7 +5,7 @@ import firebaseService from "../../../../services/firebase";
 import { CHANGE_USER_STATUS } from "../../../../actions";
 
 export class Dash4L extends Component {
-  state = { user_ret: [], refreshStatus: false };
+  state = { user_ret: [], refreshStatus: false, copy: false };
 
   refreshData = async () => {
     this.setState({ ...this.state, refreshStatus: true });
@@ -94,12 +94,21 @@ export class Dash4L extends Component {
                         className="btn btn-outline-dark"
                         value="Share URL"
                         onClick={() => {
-                          let url = `https://retrospec-up.firebaseapp.com/r/4ls/show/${id}`
-                          navigator.clipboard.writeText(url)
-                          
+                          let url = `https://retrospec-up.firebaseapp.com/r/4ls/show/${id}`;
+                          navigator.clipboard.writeText(url);
+                          this.setState({
+                            ...this.state,
+                            copy: true
+                          });
                         }}
                       ></input>
                     </div>
+                    <br></br>
+                    {this.state.copy && (
+                      <div class="alert alert-primary" role="alert">
+                        URL copied to the Clipboard
+                      </div>
+                    )}
                     <hr></hr>
 
                     <div className="btn-group" role="group" aria-label="...">
